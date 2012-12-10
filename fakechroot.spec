@@ -33,3 +33,14 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %{_mandir}/man1/%{name}*
 %{_libdir}/%name/*.so
 %{_sysconfdir}/%name/
+
+
+%changelog
+* Sun Dec 18 2011 Alexander Khrukin <akhrukin@mandriva.org> 2.16-1
++ Revision: 743623
+- update version 2.16
+
+* Wed Feb 02 2011 Bogdano Arendartchuk <bogdano@mandriva.com> 2.14-1
++ Revision: 634945
+- imported package fakechroot
+
