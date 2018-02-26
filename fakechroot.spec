@@ -38,7 +38,7 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %files
 %doc LICENSE scripts/restoremode.sh scripts/savemode.sh
 %{_bindir}/%{name}
-%{_bindir}/ldd.%{name}
+%{_bindir}/*.%{name}
 %{_sbindir}/chroot.%{name}
 %{_mandir}/man1/%{name}*
 %{_libdir}/%{name}/*.so
