@@ -1,18 +1,22 @@
 Summary:	A chroot-like wrapper for non-privileged users
 Name:		fakechroot
-Version:	2.19
+Version:	2.20.1
 Release:	1
 Group:		File tools
 License:	GPLv2+
-URL:		https://github.com/fakechroot/fakechroot/wiki
-Source0:	https://github.com/downloads/%{name}/%{name}/%{name}_%{version}.orig.tar.gz
-# https://github.com/dex4er/fakechroot/pull/50
-Patch0:		0001-Add-support-of-LFS-compatible-fts-functions.patch
-Patch1:		fakechroot-rpm-glob64.patch
-# Required for patch0:
+URL:		https://github.com/dex4er/fakechroot
+Source0:	%{url}/archive/%{version}/%{name}-%{version}.tar.gz
+
 BuildRequires:	autoconf
-BuildRequires:	automake >= 1.10
+BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	gcc
+# Required for manpage
+BuildRequires:	/usr/bin/pod2man
+# ldd.fakechroot
+Requires:	/usr/bin/objdump
+# rpm5 and rpm4 < 4.11 export glob(3) when they shouldn't...
+Conflicts:	rpm < 2:4.14.0
 
 %description
 fakechroot runs a command in an environment were is additional possibility
@@ -22,24 +26,34 @@ install another packages without need for root privileges.
 
 %prep
 %setup -q
-%apply_patches
-
-# Patch0 updates autoconf, so rerun this:
-./autogen.sh
+%autosetup -p1
+# For %%doc dependency-clean.
+chmod -x scripts/{relocatesymlinks,restoremode,savemode}.sh
 
 %build
-%configure
-%make
+autoreconf -vfi
+%configure --disable-static --disable-silent-rules
+%make_build
 
 %install
-%makeinstall_std
-find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
+%make_install
+# Drop libtool files
+find %{buildroot}%{_libdir} -name '*.la' -delete -print
+
+%check
+%make_build check
 
 %files
-%doc LICENSE scripts/restoremode.sh scripts/savemode.sh
+%doc scripts/{relocatesymlinks,restoremode,savemode}.sh
+%doc NEWS.md README.md THANKS.md
+%license COPYING LICENSE
 %{_bindir}/%{name}
-%{_bindir}/*.%{name}
+%{_bindir}/env.%{name}
+%{_bindir}/ldd.%{name}
 %{_sbindir}/chroot.%{name}
-%{_mandir}/man1/%{name}*
+%dir %{_sysconfdir}/%{name}/
+%config(noreplace) %{_sysconfdir}/%{name}/chroot.env
+%config(noreplace) %{_sysconfdir}/%{name}/debootstrap.env
+%config(noreplace) %{_sysconfdir}/%{name}/rinse.env
+%{_mandir}/man1/%{name}.1*
 %{_libdir}/%{name}/*.so
-%{_sysconfdir}/%{name}/
