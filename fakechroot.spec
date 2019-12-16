@@ -10,7 +10,6 @@ Source0:	%{url}/archive/%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
-BuildRequires:	gcc
 # Required for manpage
 BuildRequires:	/usr/bin/pod2man
 # ldd.fakechroot
@@ -25,7 +24,6 @@ allowing users to create own chrooted environment with possibility to
 install another packages without need for root privileges.
 
 %prep
-%setup -q
 %autosetup -p1
 # For %%doc dependency-clean.
 chmod -x scripts/{relocatesymlinks,restoremode,savemode}.sh
