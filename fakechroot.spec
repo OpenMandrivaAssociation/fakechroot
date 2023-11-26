@@ -6,11 +6,11 @@ Group:		File tools
 License:	GPLv2+
 URL:		https://github.com/dex4er/fakechroot
 Source0:	%{url}/archive/%{version}/%{name}-%{version}.tar.gz
-Patch0:	https://github.com/dex4er/fakechroot/commit/b42d1fb9538f680af2f31e864c555414ccba842a.patch
-Patch1:	https://github.com/dex4er/fakechroot/pull/85/commits/534e6d555736b97211523970d378dfb0db2608e9.patch
-Patch2:	https://github.com/dex4er/fakechroot/pull/85/commits/75d7e6fa191c11a791faff06a0de86eaa7801d05.patch
-Patch3:	https://github.com/dex4er/fakechroot/pull/85/commits/693a3597ea7fccfb62f357503ff177bd3e3d5a89.patch
-Patch4:	https://github.com/dex4er/fakechroot/pull/86.patch
+Patch0:		https://github.com/dex4er/fakechroot/commit/b42d1fb9538f680af2f31e864c555414ccba842a.patch
+Patch1:		https://github.com/dex4er/fakechroot/pull/80.patch
+Patch2:		https://github.com/dex4er/fakechroot/pull/104.patch
+Patch3:		https://src.fedoraproject.org/rpms/fakechroot/raw/rawhide/f/disable_cp.t.patch
+Patch4:		https://src.fedoraproject.org/rpms/fakechroot/raw/rawhide/f/autoupdate.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -33,13 +33,14 @@ chmod -x scripts/{relocatesymlinks,restoremode,savemode}.sh
 
 %build
 autoreconf -vfi
+# FIXME Building with clang causes 6 tests in "make check" to fail
+# Last verified with fakechroot 2.20.1, clang 17.0.5
+export CC=gcc
 %configure --disable-static --disable-silent-rules
 %make_build
 
 %install
 %make_install
-# Drop libtool files
-find %{buildroot}%{_libdir} -name '*.la' -delete -print
 
 %check
 %make_build check

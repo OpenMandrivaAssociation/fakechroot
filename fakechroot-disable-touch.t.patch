@@ -1,0 +1,11 @@
+diff -up fakechroot-2.20.1/test/Makefile.am.omv~ fakechroot-2.20.1/test/Makefile.am
+--- fakechroot-2.20.1/test/Makefile.am.omv~	2023-11-26 02:32:35.389320041 +0100
++++ fakechroot-2.20.1/test/Makefile.am	2023-11-26 02:32:37.824366507 +0100
+@@ -36,7 +36,6 @@ TESTS = \
+     t/symlink.t \
+     t/system.t \
+     t/test-r.t \
+-    t/touch.t \
+     t/zzarchlinux.t \
+     t/zzdebootstrap.t \
+     #

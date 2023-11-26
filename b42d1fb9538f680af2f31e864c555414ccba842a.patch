@@ -11,18 +11,6 @@ Subject: [PATCH] New `statx` function
  4 files changed, 47 insertions(+)
  create mode 100644 src/statx.c
 
-diff --git a/NEWS.md b/NEWS.md
-index 9de12fe..f1210bf 100644
---- a/NEWS.md
-+++ b/NEWS.md
-@@ -5,6 +5,7 @@
- XX Xxx XXXX
- 
- * UNRELEASED
-+* New `statx(2)` function was added: glibc supports it since 2.28.
- 
- ## Version 2.20.1
- 
 diff --git a/configure.ac b/configure.ac
 index a654edd..f8cdb32 100644
 --- a/configure.ac
