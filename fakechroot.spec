@@ -33,17 +33,21 @@ chmod -x scripts/{relocatesymlinks,restoremode,savemode}.sh
 
 %build
 autoreconf -vfi
+%if ! %{cross_compiling}
 # FIXME Building with clang causes 6 tests in "make check" to fail
 # Last verified with fakechroot 2.20.1, clang 17.0.5
 export CC=gcc
+%endif
 %configure --disable-static --disable-silent-rules
 %make_build
 
 %install
 %make_install
 
+%if ! %{cross_compiling}
 %check
 %make_build check
+%endif
 
 %files
 %doc scripts/{relocatesymlinks,restoremode,savemode}.sh
