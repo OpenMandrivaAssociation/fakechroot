@@ -1,7 +1,7 @@
 Summary:	A chroot-like wrapper for non-privileged users
 Name:		fakechroot
 Version:	2.20.1
-Release:	2
+Release:	3
 Group:		File tools
 License:	GPLv2+
 URL:		https://github.com/dex4er/fakechroot
@@ -19,8 +19,6 @@ BuildRequires:	libtool
 BuildRequires:	/usr/bin/pod2man
 # ldd.fakechroot
 Requires:	/usr/bin/objdump
-# rpm5 and rpm4 < 4.11 export glob(3) when they shouldn't...
-Conflicts:	rpm < 2:4.14.0
 
 %description
 fakechroot runs a command in an environment were is additional possibility
