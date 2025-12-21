@@ -12,6 +12,8 @@ Patch2:		https://github.com/dex4er/fakechroot/pull/104.patch
 Patch3:		https://src.fedoraproject.org/rpms/fakechroot/raw/rawhide/f/disable_cp.t.patch
 Patch4:		https://src.fedoraproject.org/rpms/fakechroot/raw/rawhide/f/autoupdate.patch
 
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
